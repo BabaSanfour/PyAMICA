@@ -84,7 +84,7 @@ def run_ica_method(raw, method, n_components, max_iter=500):
     print(f"\n  Running {method}...")
 
     if method == "amica":
-        from mne_amica import fit_ica
+        from amica_python import fit_ica
         t0 = time.time()
         ica = fit_ica(raw, n_components=n_components, max_iter=max_iter,
                       num_mix=3, random_state=42,

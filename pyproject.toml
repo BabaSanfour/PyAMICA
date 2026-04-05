@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mne-amica"
+name = "amica-python"
 version = "0.1.0"
 description = "Native Python AMICA (Adaptive Mixture ICA) for MNE-Python"
 readme = "README.md"
@@ -28,15 +28,26 @@ dependencies = [
 jax = ["jax[cpu]>=0.4"]
 gpu = ["jax[cuda12]>=0.4"]
 mne = ["mne>=1.0"]
-dev = ["pytest>=7.0", "mne>=1.0", "matplotlib>=3.5"]
+dev = ["pytest>=7.0", "mne>=1.0", "matplotlib>=3.5", "pre-commit>=3.0", "ruff>=0.9"]
 all = ["jax[cpu]>=0.4", "mne>=1.0", "matplotlib>=3.5", "pytest>=7.0"]
 
 [project.urls]
-Homepage = "https://github.com/snesmaeili/mne-amica"
-Repository = "https://github.com/snesmaeili/mne-amica"
+Homepage = "https://github.com/snesmaeili/amica-python"
+Repository = "https://github.com/snesmaeili/amica-python"
 
 [tool.setuptools.packages.find]
-include = ["mne_amica*"]
+include = ["amica_python*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["amica_python"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

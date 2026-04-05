@@ -1,24 +1,93 @@
-# PyAMICA
+# amica-python
 
-PyAMICA is a Python-based implementation of AMICA (Adaptive Mixture Independent Component Analysis) for EEG data processing, fully operable within WSL (Windows Subsystem for Linux) and without any dependency on MATLAB. This repository provides a streamlined pipeline to preprocess EEG data, execute AMICA, and seamlessly import results into Python for further analysis.
+Native Python implementation of AMICA (Adaptive Mixture Independent Component Analysis) for MNE-Python.
+
+AMICA is the highest-performing ICA algorithm for EEG/MEG data, achieving the best mutual information reduction and source dipolarity among 22 tested algorithms ([Delorme et al., 2012](https://doi.org/10.1371/journal.pone.0030135)).
+
+## Installation
+
+```bash
+pip install amica-python
+
+# With JAX acceleration (recommended)
+pip install "amica-python[jax]"
+
+# With MNE-Python integration
+pip install "amica-python[mne]"
+
+# Everything
+pip install "amica-python[all]"
+```
+
+For development:
+
+```bash
+git clone https://github.com/snesmaeili/amica-python.git
+cd amica-python
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+### Standalone
+
+```python
+from amica_python import Amica, AmicaConfig
+
+config = AmicaConfig(max_iter=2000, num_mix_comps=3)
+model = Amica(config, random_state=42)
+result = model.fit(data)  # data: (n_channels, n_samples)
+
+sources = model.transform(data)
+```
+
+### With MNE-Python
+
+```python
+from amica_python import amica
+
+# Picard-compatible functional API
+W, n_iter = amica(X, return_n_iter=True, max_iter=2000)
+```
+
+### Planned: MNE ICA Integration
+
+```python
+from mne.preprocessing import ICA
+ica = ICA(n_components=20, method='amica')
+ica.fit(raw)
+```
 
 ## Features
 
-- Pure Python-based AMICA processing—no MATLAB required
-- Step-by-step installation and setup guide for WSL and VS Code
-- Integration of AMICA into Python pipelines using `subprocess`
-- Suitable for EEG and neuroscience research applications
+- Full AMICA algorithm: ICA mixture model with adaptive generalized Gaussian source densities
+- Newton optimization with quadratic convergence
+- EM-based parameter updates with GEM convergence guarantee
+- Sample rejection for artifact robustness
+- JAX acceleration (GPU/TPU) with NumPy fallback
+- scikit-learn-compatible API
 
-## Installation Guide
+## Default Parameters
 
-### **1. Install Intel OneAPI Toolkits in WSL**
+| Parameter | Default | Reference |
+|-----------|---------|-----------|
+| `max_iter` | 2000 | Frank et al. (2023) |
+| `num_mix_comps` | 3 | Frank et al. (2023) |
+| `do_newton` | True | Palmer et al. (2008) |
+| `newt_start` | 50 | Palmer et al. (2008) |
+| `rejstart` | 2 | Klug et al. (2024) |
+| `rejint` | 3 | Klug et al. (2024) |
+| `rejsig` | 3.0 | Klug et al. (2024) |
 
-Follow the instructions provided in the [Intel OneAPI Installation Guide](#) to install the Base and HPC Toolkits in your WSL environment.
+## References
 
-### **2. Compile AMICA**
+- Palmer, Kreutz-Delgado, Makeig (2011). AMICA: An Adaptive Mixture of Independent Component Analyzers with Shared Components. SCCN Technical Report.
+- Palmer, Makeig, Kreutz-Delgado, Rao (2008). Newton Method for the ICA Mixture Model. ICASSP.
+- Palmer, Kreutz-Delgado, Makeig (2006). Super-Gaussian Mixture Source Model for ICA. ICA.
+- Delorme et al. (2012). Independent EEG Sources Are Dipolar. PLoS ONE.
+- Frank et al. (2023). Optimal Parameters for AMICA. IEEE BIBE.
+- Klug, Berg, Gramann (2024). Optimizing EEG ICA decomposition. Scientific Reports.
 
-Navigate to the `amica` directory and compile the source code:
+## License
 
-```bash
-cd amica
-mpiifort -qopenmp -mkl -O3 -fpp -DMKL amica15.f90 funmod2.f90 -o amica15_wsl
+BSD-3-Clause

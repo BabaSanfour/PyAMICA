@@ -1,9 +1,9 @@
 """
-MATLAB Parity Test for mne-amica
+MATLAB Parity Test for amica-python
 ================================
 
 Runs AMICA on synthetic data using both:
-1. mne-amica (Python/JAX)
+1. amica-python (Python/JAX)
 2. MATLAB AMICA 1.7 (Fortran reference via MATLAB Engine)
 
 Compares: log-likelihood curves, unmixing matrices, source density params.
@@ -25,8 +25,8 @@ RESULTS_DIR.mkdir(exist_ok=True)
 
 
 def run_python_amica(data, max_iter=200, num_mix=3, do_newton=True, seed=42):
-    """Run mne-amica on data."""
-    from mne_amica import Amica, AmicaConfig
+    """Run amica-python on data."""
+    from amica_python import Amica, AmicaConfig
 
     config = AmicaConfig(
         max_iter=max_iter,
@@ -239,7 +239,7 @@ def main():
         print(f"{'-' * 60}")
 
         # Python
-        print("\n  [Python] Running mne-amica...")
+        print("\n  [Python] Running amica-python...")
         py_result = run_python_amica(
             data, max_iter=cfg['max_iter'], num_mix=cfg['num_mix'],
             do_newton=cfg['do_newton']

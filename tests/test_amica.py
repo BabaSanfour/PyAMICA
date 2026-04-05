@@ -1,4 +1,4 @@
-"""Tests for mne-amica package."""
+"""Tests for amica-python package."""
 import unittest
 import numpy as np
 
@@ -8,7 +8,7 @@ class TestAmicaBasic(unittest.TestCase):
 
     def test_fit_random_data(self):
         """Test basic fitting on random data."""
-        from mne_amica import Amica, AmicaConfig
+        from amica_python import Amica, AmicaConfig
 
         rng = np.random.RandomState(42)
         n_channels, n_samples = 4, 500
@@ -28,7 +28,7 @@ class TestAmicaBasic(unittest.TestCase):
 
     def test_transform_inverse(self):
         """Test that transform + inverse_transform reconstructs data."""
-        from mne_amica import Amica, AmicaConfig
+        from amica_python import Amica, AmicaConfig
 
         rng = np.random.RandomState(42)
         n_channels, n_samples = 4, 500
@@ -49,7 +49,7 @@ class TestAmicaBasic(unittest.TestCase):
 
     def test_ll_increases(self):
         """Test that log-likelihood generally increases over iterations."""
-        from mne_amica import Amica, AmicaConfig
+        from amica_python import Amica, AmicaConfig
 
         rng = np.random.RandomState(123)
         n_channels, n_samples = 4, 1000
@@ -74,7 +74,7 @@ class TestAmicaFunctionalAPI(unittest.TestCase):
 
     def test_amica_function(self):
         """Test amica() functional API returns correct shapes."""
-        from mne_amica import amica
+        from amica_python import amica
 
         rng = np.random.RandomState(42)
         n_samples, n_components = 500, 4
@@ -86,7 +86,7 @@ class TestAmicaFunctionalAPI(unittest.TestCase):
 
     def test_amica_return_n_iter(self):
         """Test return_n_iter flag."""
-        from mne_amica import amica
+        from amica_python import amica
 
         rng = np.random.RandomState(42)
         X = rng.randn(500, 4)
@@ -102,7 +102,7 @@ class TestAmicaSourceSeparation(unittest.TestCase):
 
     def test_separate_laplacian_sources(self):
         """Test separation of known Laplacian sources."""
-        from mne_amica import Amica, AmicaConfig
+        from amica_python import Amica, AmicaConfig
 
         rng = np.random.RandomState(0)
         n_sources, n_samples = 3, 5000
@@ -141,7 +141,7 @@ class TestAmicaConfig(unittest.TestCase):
 
     def test_defaults(self):
         """Test default config values match literature recommendations."""
-        from mne_amica import AmicaConfig
+        from amica_python import AmicaConfig
         cfg = AmicaConfig()
         self.assertEqual(cfg.max_iter, 2000)
         self.assertEqual(cfg.num_mix_comps, 3)
@@ -153,7 +153,7 @@ class TestAmicaConfig(unittest.TestCase):
 
     def test_invalid_config(self):
         """Test that invalid config raises errors."""
-        from mne_amica import AmicaConfig
+        from amica_python import AmicaConfig
         with self.assertRaises(ValueError):
             AmicaConfig(num_models=0)
         with self.assertRaises(ValueError):
@@ -167,7 +167,7 @@ class TestAmicaRejection(unittest.TestCase):
 
     def test_rejection_enabled(self):
         """Test that rejection runs without errors when enabled."""
-        from mne_amica import Amica, AmicaConfig
+        from amica_python import Amica, AmicaConfig
 
         rng = np.random.RandomState(42)
         n_channels, n_samples = 4, 1000
@@ -202,7 +202,7 @@ class TestMNEIntegration(unittest.TestCase):
         except ImportError:
             self.skipTest("MNE-Python not installed")
 
-        from mne_amica import fit_ica
+        from amica_python import fit_ica
 
         # Create synthetic Raw object
         sfreq = 256

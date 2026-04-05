@@ -1,5 +1,5 @@
 """
-mne-amica Validation Suite
+amica-python Validation Suite
 ==========================
 
 Runs all validation benchmarks:
@@ -93,7 +93,7 @@ def run_synthetic_benchmark():
     print("1. SYNTHETIC SOURCE SEPARATION BENCHMARK")
     print("=" * 60)
 
-    from mne_amica import Amica, AmicaConfig
+    from amica_python import Amica, AmicaConfig
 
     rng = np.random.RandomState(42)
     n_sources = 6
@@ -231,7 +231,7 @@ def run_mne_sample_benchmark():
 
     # --- AMICA via fit_ica ---
     print("\n  Running AMICA on MNE sample EEG...")
-    from mne_amica import fit_ica
+    from amica_python import fit_ica
     t0 = time.time()
     ica_amica = fit_ica(raw, n_components=n_components, max_iter=200,
                         num_mix=3, random_state=42,
@@ -316,7 +316,7 @@ def run_convergence_analysis():
     print("3. CONVERGENCE ANALYSIS")
     print("=" * 60)
 
-    from mne_amica import Amica, AmicaConfig
+    from amica_python import Amica, AmicaConfig
 
     rng = np.random.RandomState(42)
     n_sources, n_samples = 6, 5000
@@ -375,7 +375,7 @@ def run_parameter_sensitivity():
     print("4. PARAMETER SENSITIVITY ANALYSIS")
     print("=" * 60)
 
-    from mne_amica import Amica, AmicaConfig
+    from amica_python import Amica, AmicaConfig
 
     rng = np.random.RandomState(42)
     n_sources = 6
@@ -484,7 +484,7 @@ def run_parameter_sensitivity():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("mne-amica VALIDATION SUITE")
+    print("amica-python VALIDATION SUITE")
     print("=" * 60)
 
     all_results = {}

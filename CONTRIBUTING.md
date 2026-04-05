@@ -1,14 +1,14 @@
-# Contributing to mne-amica
+# Contributing to amica-python
 
-Thank you for your interest in contributing to mne-amica! This document provides guidelines for contributing to this project.
+Thank you for your interest in contributing to amica-python! This document provides guidelines for contributing to this project.
 
 ## Getting Started
 
 1. Fork the repository on GitHub
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/<your-username>/mne-amica.git
-   cd mne-amica
+   git clone https://github.com/<your-username>/amica-python.git
+   cd amica-python
    ```
 3. Create a virtual environment and install in development mode:
    ```bash
